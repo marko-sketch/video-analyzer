@@ -9,14 +9,18 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || '',
 });
 
-interface ContentPart {
-  type: 'text' | 'image_url';
-  text?: string;
-  image_url?: {
-    url: string;
-    detail?: 'low' | 'high' | 'auto';
-  };
-}
+type ContentPart =
+  | {
+      type: 'text';
+      text: string;
+    }
+  | {
+      type: 'image_url';
+      image_url: {
+        url: string;
+        detail?: 'low' | 'high' | 'auto';
+      };
+    };
 
 interface RequestBody {
   sessionMessages: { role: 'user' | 'assistant'; content: string }[];

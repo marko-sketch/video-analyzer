@@ -217,8 +217,9 @@ export async function POST(req: NextRequest) {
       });
     });
 
-    // Return PDF
-    return new NextResponse(pdfBuffer, {
+    // Return PDF (NextResponse expects a web-compatible BodyInit)
+    const pdfBytes = new Uint8Array(pdfBuffer);
+    return new NextResponse(pdfBytes, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
